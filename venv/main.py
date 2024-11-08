@@ -2,7 +2,7 @@ from typing import Final
 import os
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
-from responses import get_respose
+from responses import get_response
 
 load_dotenv()
 TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
@@ -23,7 +23,7 @@ async def send_message(message: Message, user_message: str) -> None:
         user_message = user_message[1:] # Slice to exclude the ?
 
     try:
-        response: str = get_respose(user_message)
+        response: str = get_response(user_message)
         await message.author.send(response) if is_prinvate else await message.channel.send(response)
     except Exception as e:
         print(e)
@@ -41,7 +41,7 @@ async def on_message(message: Message) -> None:
         return
     
     username: str = str(message.author)
-    user_message: str =  message.content
+    user_message: str = message.content
     channel: str = str(message.channel)
 
     print(f'[{channel}] {username}: "{user_message}"')
